@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+.title_width{
+    width: 300px;
+}
+
+.number_width{
+    width: 30px;
+    padding: 0.1rem;
+}
+
+.date_information{
+    text-align: center;
+}
+
+.table th, .table td{
+    padding: 0.1rem;
+}
+
+
