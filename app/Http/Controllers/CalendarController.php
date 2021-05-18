@@ -131,7 +131,7 @@ class CalendarController extends Controller
      */
     public function update(Request $request, $ym)
     {   
-        //共通処理
+        //一行ごとに精査
         for($i = 1; $i <= 10; $i++){
             $user_id = Auth::user()->id;
             $display_order = $i;
@@ -172,18 +172,19 @@ class CalendarController extends Controller
                 //データ登録処理UPDATE
                 if(null != $request->input('item_name'.$i)){
                     $item_name = $request->input('item_name'.$i);
-
-                    for($j = 1; $j <= 31; $j++){
-                        if(null != $request->input($i.'_count_'.$j)){
-                            $count = $request->input($i.'_count_'.$j);
-                        }else{
-                            $count = null;
-                        }
-                        array_push($array_datas,$count);
-                    }
                 }else{
-                    $item_name = null;
+                    $item_name = "";
                 }
+
+                for($j = 1; $j <= 31; $j++){
+                    if(null != $request->input($i.'_count_'.$j)){
+                        $count = $request->input($i.'_count_'.$j);
+                    }else{
+                        $count = null;
+                    }
+                    array_push($array_datas,$count);
+                }
+              
                     $query = '
                     UPDATE 
                         learning_data
