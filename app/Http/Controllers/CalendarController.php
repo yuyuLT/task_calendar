@@ -19,39 +19,8 @@ class CalendarController extends Controller
         //指定日の曜日を取得する
         $date = date('w', strtotime($ym.'-01')) + 1;
         $count_day = date('t', strtotime($ym.'-01'));
+        $weeks = $this->makeWeeksList($date, $count_day);
         
-        //TODO:関数化
-        $weeks = array();
-        for ($i = $date; $i < $date + $count_day; $i++) {
-            if($i % 7 === 1){
-                array_push($weeks,'日');
-            };
-
-            if($i % 7 === 2){
-                array_push($weeks,'月');
-            };
-
-            if($i % 7 === 3){
-                array_push($weeks,'火');
-            };
-
-            if($i % 7 === 4){
-                array_push($weeks,'水');
-            };
-
-            if($i % 7 === 5){
-                array_push($weeks,'木');
-            };
-
-            if($i % 7 === 6){
-                array_push($weeks,'金');
-            };
-
-            if($i % 7 === 0){
-                array_push($weeks,'土');
-            };
-        }
-
         $query = 
         'SELECT *
          FROM learning_data
@@ -78,38 +47,7 @@ class CalendarController extends Controller
         //指定日の曜日を取得する
         $date = date('w', strtotime($ym.'-01')) + 1;
         $count_day = date('t', strtotime($ym.'-01'));
-
-        //TODO:関数化
-        $weeks = array();
-        for ($i = $date; $i < $date + $count_day; $i++) {
-            if($i % 7 === 1){
-                array_push($weeks,'日');
-            };
-
-            if($i % 7 === 2){
-                array_push($weeks,'月');
-            };
-
-            if($i % 7 === 3){
-                array_push($weeks,'火');
-            };
-
-            if($i % 7 === 4){
-                array_push($weeks,'水');
-            };
-
-            if($i % 7 === 5){
-                array_push($weeks,'木');
-            };
-
-            if($i % 7 === 6){
-                array_push($weeks,'金');
-            };
-
-            if($i % 7 === 0){
-                array_push($weeks,'土');
-            };
-        }
+        $weeks = $this->makeWeeksList($date, $count_day);
 
         $query = 
         'SELECT *
@@ -131,7 +69,6 @@ class CalendarController extends Controller
      */
     public function update(Request $request, $ym)
     {   
-        //一行ごとに精査
         for($i = 1; $i <= 10; $i++){
             $user_id = Auth::user()->id;
             $display_order = $i;
@@ -273,8 +210,47 @@ class CalendarController extends Controller
         return redirect(route('current', [
             'ym' => $ym
         ]));
-        
-
     }
 
+    //曜日一覧を作成するメソッド
+    public function makeWeeksList($day,$count){
+
+        $weeks = array();
+
+        for ($i = $day; $i < $day + $count; $i++) {
+            if($i % 7 === 1){
+                array_push($weeks,'日');
+            };
+
+            if($i % 7 === 2){
+                array_push($weeks,'月');
+            };
+
+            if($i % 7 === 3){
+                array_push($weeks,'火');
+            };
+
+            if($i % 7 === 4){
+                array_push($weeks,'水');
+            };
+
+            if($i % 7 === 5){
+                array_push($weeks,'木');
+            };
+
+            if($i % 7 === 6){
+                array_push($weeks,'金');
+            };
+
+            if($i % 7 === 0){
+                array_push($weeks,'土');
+            };
+        }
+        return $weeks;
+    }
+    
+
 }
+    
+
+
